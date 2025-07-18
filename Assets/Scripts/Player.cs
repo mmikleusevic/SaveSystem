@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     private Vector3 direction;
     private float health;
     private bool hasKey;
+    
+    public bool HasKey => hasKey;
 
     private void Start()
     {
@@ -41,6 +43,11 @@ public class Player : MonoBehaviour
         {
             direction = Vector3.right;
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            
+        }
     }
 
     private void FixedUpdate()
@@ -61,16 +68,8 @@ public class Player : MonoBehaviour
         GameManager.Instance.HealthUI(health, maxHealth);
     }
 
-    public void OpenDoor(Vrata vrata)
-    {
-        if (!hasKey) return;
-        
-        vrata.OpenDoor();
-    }
-
     public void PickupKey()
     {
         hasKey = true;
-        keyText.gameObject.SetActive(false);
     }
 }

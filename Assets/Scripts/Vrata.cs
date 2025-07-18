@@ -1,19 +1,47 @@
+using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Vrata : MonoBehaviour
 {
+    [SerializeField] private GameObject doorText;
+    
     private bool isOpen;
-    private void OnTriggerEnter(Collider other)
+    private bool hasKey;
+
+    private void Start()
     {
-        if (other.TryGetComponent(out Player player) )
+        doorText.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            player.OpenDoor(this);
+            OpenDoor();
         }
     }
 
-    public void OpenDoor()
+    private void OnTriggerEnter(Collider other)
     {
+        if (!other.TryGetComponent(out Player player)) return;
+
+        if (!isOpen && player.HasKey)
+        {
+            hasKey = true;
+            doorText.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        doorText.SetActive(false);
+    }
+
+    private void OpenDoor()
+    {
+        if (!hasKey) return;
         StartCoroutine(Open());
     }
 
