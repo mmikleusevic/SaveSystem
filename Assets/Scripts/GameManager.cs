@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
         score = 0;
         highScore = PlayerPrefs.GetInt(HIGHSCORE);
         scoreText.text = "Score: " + score;
+        
+        highScore = JsonSave.Instance.GetScore();
+        
         highScoreText.text = "HighScore: " + highScore;
     }
 
@@ -112,7 +115,7 @@ public class GameManager : MonoBehaviour
         
         highScore = score;
         highScoreText.text = "HighScore: " + highScore;
-        
+        JsonSave.Instance.SetScore(score);
         PlayerPrefs.SetInt(HIGHSCORE, highScore);
     }
 }
